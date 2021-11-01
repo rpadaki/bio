@@ -1,0 +1,48 @@
+name: Build and deploy site to `rpadaki/rpadaki.github.io`
+
+on:
+  - push:
+      branches: [main]
+
+jobs:
+  build-deploy:
+    name: Build and deploy site
+    runs-on: ubuntu-20.04
+    concurrency: deploy
+
+    steps:
+      - name: Checkout repo into `source` directory
+        uses: actions/checkout@v2
+        with:
+          path: source
+      - name: Checkout destination repo into `dist` directory
+        uses: actions/checkout@v2
+        with:
+          repository: rpadaki/rpadaki.github.io
+          path: dist
+          token: ${{ github.token }}
+      - name: Install rust toolchain for wasm
+        uses: actions-rs/toolchain@v1
+        working-directory: source
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+      - name: Install build tools
+        working-directory: source
+        run: cargo install trunk wasm-bindgen-cli
+      - name: Build release site
+        working-directory: source
+        run: trunk build --release
+      - name: Nuke old website
+        working-directory: dist
+        run: git rm -r .
+      - name: Add `.nojekyll`
+        working-directory: dist
+        run: touch .nojekyll
+      - name: Copy new website build
+        run: cp -r source/dist dist
+      - name: Print proposed git changes
+        working-directory: dist
+        run: git status
+        
