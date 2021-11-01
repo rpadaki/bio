@@ -1,0 +1,12 @@
+# rust build directories
+debug/
+target/
+
+# trunk build directory
+dist/
+
+# rustfmt backup files
+**/*.rs.bk
+
+# msvc symbols
+*.pdb
