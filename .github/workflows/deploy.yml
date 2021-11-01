@@ -23,7 +23,6 @@ jobs:
           token: ${{ github.token }}
       - name: Install rust toolchain for wasm
         uses: actions-rs/toolchain@v1
-        working-directory: source
         with:
           toolchain: stable
           target: wasm32-unknown-unknown
