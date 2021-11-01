@@ -29,6 +29,8 @@ jobs:
             ~/.cargo/registry/index
             ~/.cargo/registry/cache
             ~/.cargo/git/db
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
             source/target
           key: bio-cargo-${{ hashFiles('source/**/Cargo.lock') }}
       - name: Install rust toolchain for wasm
