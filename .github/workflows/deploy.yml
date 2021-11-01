@@ -1,8 +1,8 @@
 name: Build and deploy site to `rpadaki/rpadaki.github.io`
 
 on:
-  - push:
-      branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   build-deploy:
