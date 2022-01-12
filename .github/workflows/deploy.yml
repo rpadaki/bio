@@ -33,6 +33,8 @@ jobs:
             ~/.cargo/.crates2.json
             source/target
           key: bio-cargo-${{ hashFiles('source/**/Cargo.lock') }}
+          restore-keys: bio-cargo-
+
       - name: Install rust toolchain for wasm
         uses: actions-rs/toolchain@v1
         with:
@@ -47,13 +49,20 @@ jobs:
         run: trunk build --release
       - name: Nuke old website
         working-directory: dist
-        run: git rm -r .
+        run: rm -rf ./*
       - name: Add `.nojekyll`
         working-directory: dist
         run: touch .nojekyll
       - name: Copy new website build
+        working-directory: dist
         run: cp -r source/dist .
       - name: Print proposed git changes
         working-directory: dist
         run: git status
-        
+      - name: Authenticate git
+      - name: Commit new website build
+        working-directory: dist
+        run: git add . && git commit -m "build of commit ${{ github.sha }} from rpadaki/bio"
+      - name: Push new website build
+        working-directory: dist
+        run: git push origin main
