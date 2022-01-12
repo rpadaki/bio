@@ -54,8 +54,7 @@ jobs:
         working-directory: dist
         run: touch .nojekyll
       - name: Copy new website build
-        working-directory: dist
-        run: cp -r source/dist .
+        run: cp -r source/dist dist
       - name: Print proposed git changes
         working-directory: dist
         run: git status
