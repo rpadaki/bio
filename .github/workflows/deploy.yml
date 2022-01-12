@@ -60,6 +60,10 @@ jobs:
         working-directory: dist
         run: git status
       - name: Authenticate git
+        working-directory: dist
+        run: |
+          git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+          git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
       - name: Commit new website build
         working-directory: dist
         run: git add . && git commit -m "build of commit ${{ github.sha }} from rpadaki/bio"
