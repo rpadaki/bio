@@ -20,7 +20,7 @@ jobs:
         with:
           repository: rpadaki/rpadaki.github.io
           path: dist
-          token: ${{ github.token }}
+          token: ${{ secrets.PUBLISH_TOKEN }}
       - name: Restore build tools and objects from cache
         uses: actions/cache@v2
         with:
@@ -54,7 +54,7 @@ jobs:
         working-directory: dist
         run: touch .nojekyll
       - name: Copy new website build
-        run: cp -r source/dist dist
+        run: cp -r source/dist .
       - name: Print proposed git changes
         working-directory: dist
         run: git status
