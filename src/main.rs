@@ -43,6 +43,7 @@ impl Component for Main {
                 bottom: 0;
                 right: 0;
                 overflow: auto;
+                overflow-x: hidden;
                 background-color: #121212;
                 display: flex;
                 justify-content: center;
